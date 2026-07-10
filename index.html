@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.6" />
+<title>Code Quest — Learn Python!</title>
+<meta name="description" content="A friendly Python adventure for young coders." />
+<meta name="theme-color" content="#6c5ce7" />
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐍</text></svg>" />
+<link rel="stylesheet" href="vendor/codemirror/lib/codemirror.css" />
+<link rel="stylesheet" href="vendor/codemirror/theme/dracula.css" />
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<div id="offline-banner" class="offline-banner hidden">
+  📡 You're offline — but Code Quest still works! Your saved game (Pyodide) is cached.
+</div>
+
+<header class="topbar">
+  <div class="topbar-brand">
+    <span class="brand-emoji" aria-hidden="true">🐍</span>
+    <span class="brand-title">Code Quest</span>
+  </div>
+  <div class="topbar-stats">
+    <div class="stat-pill" id="points-pill" title="Stars earned">
+      <span aria-hidden="true">⭐</span> <span id="points-value">0</span>
+    </div>
+    <div class="stat-pill" id="badges-pill" title="Badges earned">
+      <span aria-hidden="true">🏅</span> <span id="badges-value">0</span>/8
+    </div>
+    <button id="map-button" class="pill-button" type="button">🗺️ Map</button>
+  </div>
+</header>
+
+<main id="view-root" aria-live="polite">
+  <!-- Views are rendered here by js/main.js -->
+</main>
+
+<div id="celebration-overlay" class="celebration-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="celebration-title">
+  <div class="celebration-card">
+    <div class="celebration-confetti" id="celebration-confetti"></div>
+    <div class="celebration-badge" id="celebration-badge-emoji">🏅</div>
+    <h2 id="celebration-title">Level Complete!</h2>
+    <p id="celebration-message">You earned a new badge!</p>
+    <div class="celebration-points" id="celebration-points">+10 ⭐</div>
+    <div class="celebration-buttons">
+      <button id="celebration-continue" class="big-button primary" type="button">Continue Quest ➜</button>
+      <button id="celebration-map" class="big-button" type="button">Back to Map 🗺️</button>
+    </div>
+  </div>
+</div>
+
+<canvas id="confetti-canvas" class="confetti-canvas hidden"></canvas>
+
+<template id="guide-bubble-template">
+  <div class="guide">
+    <div class="guide-avatar" aria-hidden="true">🦊</div>
+    <div class="guide-bubble"></div>
+  </div>
+</template>
+
+<script src="vendor/pyodide/pyodide.js"></script>
+<script src="vendor/codemirror/lib/codemirror.js"></script>
+<script src="vendor/codemirror/mode/python/python.js"></script>
+<script src="vendor/codemirror/addon/edit/matchbrackets.js"></script>
+
+<script src="js/progress.js"></script>
+<script src="js/error-translator.js"></script>
+<script src="js/pyodide-runner.js"></script>
+<script src="js/turtle-canvas.js"></script>
+<script src="js/confetti.js"></script>
+<script src="js/lessons-data.js"></script>
+<script src="js/map-view.js"></script>
+<script src="js/lesson-view.js"></script>
+<script src="js/main.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+window.addEventListener('online', () => document.getElementById('offline-banner').classList.add('hidden'));
+window.addEventListener('offline', () => document.getElementById('offline-banner').classList.remove('hidden'));
+</script>
+</body>
+</html>
