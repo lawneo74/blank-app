@@ -28,6 +28,11 @@
     runRow.appendChild(runBtn);
     wrap.appendChild(runRow);
 
+    const outputLabel = document.createElement("div");
+    outputLabel.className = "output-label";
+    outputLabel.textContent = "🖥️ Output";
+    wrap.appendChild(outputLabel);
+
     const output = document.createElement("div");
     output.className = "output-panel empty";
     wrap.appendChild(output);
@@ -234,7 +239,9 @@
         }
         const checked = lesson.challenge.check ? lesson.challenge.check(result) : { pass: true };
         if (checked.pass) {
-          completeAndCelebrate();
+          // Let the learner actually see their output before the celebration
+          // overlay takes over the whole screen.
+          setTimeout(() => completeAndCelebrate(), 1100);
         } else {
           continueBtn.classList.remove("hidden");
           if (checked.tip) {
