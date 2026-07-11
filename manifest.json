@@ -1,0 +1,9 @@
+{
+  "name": "Code Quest — Learn Python!",
+  "short_name": "Code Quest",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4f1ff",
+  "theme_color": "#6c5ce7",
+  "icons": []
+}

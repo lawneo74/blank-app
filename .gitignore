@@ -17,6 +17,7 @@ downloads/
 eggs/
 .eggs/
 lib/
+!vendor/codemirror/lib/
 lib64/
 parts/
 sdist/
