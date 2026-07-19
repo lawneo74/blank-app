@@ -4,17 +4,20 @@
   function extractExceptionLine(rawMessage) {
     if (!rawMessage) return null;
     const lines = String(rawMessage).trim().split("\n");
+    // Not every exception name contains "Error" (KeyboardInterrupt,
+    // StopIteration, SystemExit...), so match those suffixes too.
+    const EXC_NAME = /Error|Exception|Warning|Interrupt|Iteration|Exit/;
     for (let i = lines.length - 1; i >= 0; i--) {
       const line = lines[i].trim();
       const match = line.match(/^([A-Za-z_][A-Za-z0-9_.]*)\s*:\s*(.*)$/);
-      if (match && /Error|Exception|Warning/.test(match[1])) {
+      if (match && EXC_NAME.test(match[1])) {
         return { type: match[1], detail: match[2] };
       }
     }
     // Some errors (like plain SyntaxError under exec) show without a colon-detail
     const last = lines[lines.length - 1].trim();
     const bare = last.match(/^([A-Za-z_][A-Za-z0-9_.]*)$/);
-    if (bare && /Error|Exception|Warning/.test(bare[1])) {
+    if (bare && EXC_NAME.test(bare[1])) {
       return { type: bare[1], detail: "" };
     }
     return null;

@@ -1,7 +1,10 @@
 /* Code Quest — service worker. Precaches the entire app (including the
    Pyodide runtime and CodeMirror, both vendored locally) so the quest
    works fully offline after the first visit. */
-const CACHE_VERSION = "codequest-v1";
+/* Bump this version on EVERY release that changes any precached file —
+   the fetch handler is cache-first, so returning visitors keep the old
+   assets until a new version triggers a fresh install/activate cycle. */
+const CACHE_VERSION = "codequest-v2";
 
 const PRECACHE_URLS = [
   "./",

@@ -38,11 +38,15 @@
     await initPyodide();
     stdoutBuffer = [];
     stderrBuffer = [];
+    // Each Run gets a fresh namespace so variables from a previous run can't
+    // leak in — otherwise deleting a line like `name = "Ava"` would still
+    // "work" until the page reloads, which is baffling for a learner.
+    const namespace = pyodideInstance.toPy({});
     try {
       if (setupPy) {
-        await pyodideInstance.runPythonAsync(setupPy);
+        await pyodideInstance.runPythonAsync(setupPy, { globals: namespace });
       }
-      await pyodideInstance.runPythonAsync(code);
+      await pyodideInstance.runPythonAsync(code, { globals: namespace });
       return {
         success: true,
         stdout: stdoutBuffer.join("\n"),
@@ -57,6 +61,8 @@
         friendlyError: translated.friendly,
         errorType: translated.type,
       };
+    } finally {
+      namespace.destroy();
     }
   }
 

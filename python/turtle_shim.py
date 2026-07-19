@@ -130,10 +130,14 @@ class _Turtle:
         self._api.writeText(self.x, self.y, str(text))
 
     def reset(self):
+        # Real turtle's reset() restores pen defaults too, not just position.
         self.x = 0.0
         self.y = 0.0
         self.heading_deg = 0.0
         self.is_down = True
+        self.pen_color = "#2b6cff"
+        self.pen_width = 3
+        self.visible = True
         self._api.clear()
         self._api.drawTurtleIcon(0, 0, 0, self.visible)
 
