@@ -4,7 +4,11 @@
     let turtleShimSourcePromise = null;
     function getTurtleShimSource() {
         if (!turtleShimSourcePromise) {
-            turtleShimSourcePromise = fetch("python/turtle_shim.py").then((res) => res.text());
+            // A host page that can't serve relative files (e.g. the Streamlit
+            // wrapper) embeds the shim source as a global instead.
+            turtleShimSourcePromise = global.CODEQUEST_TURTLE_SHIM
+                ? Promise.resolve(global.CODEQUEST_TURTLE_SHIM)
+                : fetch("python/turtle_shim.py").then((res) => res.text());
         }
         return turtleShimSourcePromise;
     }

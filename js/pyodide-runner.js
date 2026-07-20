@@ -11,7 +11,11 @@
     if (readyPromise) return readyPromise;
     readyPromise = (async () => {
       if (onProgress) onProgress("Loading Python engine...");
-      pyodideInstance = await loadPyodide({ indexURL: "vendor/pyodide/" });
+      // CODEQUEST_PYODIDE_BASE lets a host page (e.g. the Streamlit wrapper,
+      // which can't serve the vendored files) point at a CDN copy instead.
+      pyodideInstance = await loadPyodide({
+        indexURL: global.CODEQUEST_PYODIDE_BASE || "vendor/pyodide/",
+      });
 
       pyodideInstance.setStdout({ batched: (msg) => stdoutBuffer.push(msg) });
       pyodideInstance.setStderr({ batched: (msg) => stderrBuffer.push(msg) });

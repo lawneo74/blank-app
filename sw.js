@@ -4,7 +4,7 @@
 /* Bump this version on EVERY release that changes any precached file —
    the fetch handler is cache-first, so returning visitors keep the old
    assets until a new version triggers a fresh install/activate cycle. */
-const CACHE_VERSION = "codequest-v2";
+const CACHE_VERSION = "codequest-v3";
 
 const PRECACHE_URLS = [
   "./",
